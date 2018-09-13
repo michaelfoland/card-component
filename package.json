@@ -1,0 +1,11 @@
+{
+  "name": "card-component",
+  "version": "1.0.0",
+  "description": "A simple customizable card implemented as a web component.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Foland",
+  "license": "MIT"
+}
