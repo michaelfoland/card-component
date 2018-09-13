@@ -7,7 +7,13 @@ class CardHeader extends HTMLElement {
   }
   
   connectedCallback() {
-    this._root.innerHTML = `${this.innerHTML}`;    
+    this._root.innerHTML = `
+<style>
+:host {
+display: block;
+}
+</style>
+${this.innerHTML}`;    
     
     this.setAttribute('slot','header');
   }
