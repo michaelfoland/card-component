@@ -8,7 +8,14 @@ class CardFrame extends HTMLElement {
   connectedCallback() {
     this._root.innerHTML = 
 `
-I'm the card frame.
+<h2 class="header"><slot name="header">Card Header</slot></h2>
+<div class="content-frame">
+  <div class="visibility-manager">
+    <div class="content">
+      <slot name="content">Card Content</slot>
+    </div>
+  </div>
+</div>
 `;
   }
 }
