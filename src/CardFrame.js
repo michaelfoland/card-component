@@ -8,6 +8,7 @@ class CardFrame extends HTMLElement {
     // component state
     // this._contentHidden = false; // necessary
     this._expanded;
+    this._color;
     
     
     // refs to els in shadow root
@@ -19,10 +20,19 @@ class CardFrame extends HTMLElement {
     this.addEventListener('click', function(e) {
       this.expanded = !this.expanded;
     });
+
+    // listener to deal with content height on expand
+    // NOTE: This is attached to shadow root, NOT host
+    this._root.addEventListener('transitionend', () => {
+      if (this._expanded) {
+        this._visibilityManager.style.height = 'auto';
+      }
+    });    
   }
   
   initializeState() {
     this.expanded = this.hasAttribute('expanded');
+    this.color = this.getAttribute('color') || 'black';
   }
   
   getElementRefs() {
@@ -30,7 +40,8 @@ class CardFrame extends HTMLElement {
     this._content = this._root.querySelector('.content');
   }    
   
-  
+
+  // ACCESSOR & MUTATOR METHODS
   set expanded(value) {
     if (this._expanded == value) return; // bail if the value is unchanged
 
@@ -47,6 +58,25 @@ class CardFrame extends HTMLElement {
     return this._expanded;
   }
 
+  set color(value) {
+    console.log('=== color setter ===');
+    
+    // TODO: Add colorIsValid() method
+    // if (!colorIsValid(value)) return;
+    
+    // TODO: Choose appropriate header-font-color
+    // based on theme color, and set the corresponding
+    // CSS custom prop
+
+    this._color = value;
+    this.style.setProperty('--theme-color',this._color);
+  }
+  
+  get color() {
+    return this._color;
+  }
+  
+  
   hideCardContent() {
     let height = this._content.getBoundingClientRect().height;
     this._visibilityManager.style.height = height + 'px';
@@ -83,7 +113,7 @@ class CardFrame extends HTMLElement {
 }
 .content {
   background: white;
-  color: var(--theme-color);
+  color: black;
 }
 .content-frame {
   padding: 1em;
